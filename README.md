@@ -20,9 +20,9 @@ SSAFY 15기 17반 알고리즘 스터디
 
 🎼 폴더 구조 (Structure)
 
-• `Stury_A/` : A형 알고리즘 스터디
+• `Study_A/` : A형 알고리즘 스터디
 
-• `Stury_B/` : B형 알고리즘 스터디
+• `Study_B/` : B형 알고리즘 스터디
 
 • `member_name/` : 각 멤버별 개별 풀이 공간
 
