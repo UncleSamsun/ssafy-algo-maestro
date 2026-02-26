@@ -32,6 +32,7 @@ public class Main {
             int v = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
+            // 양방향 그래프
             graph[u].add(new node(v, w));
             graph[v].add(new node(u, w));
         }
@@ -47,11 +48,9 @@ public class Main {
             mcList.add(Integer.parseInt(st.nextToken()));
         }
         // 맥도날드 정점에 대한 다른 노드의 거리 배열 초기화
-        int[][] mcDist = new int[M][V+1];
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j <= V; j++) {
-                mcDist[i][j] = Integer.MAX_VALUE;
-            }
+        int[] mcDist = new int[V+1];
+        for (int i = 0; i <= V; i++) {
+            mcDist[i] = Integer.MAX_VALUE;
         }
         //  스타벅스 정보 입력
         // 스타벅스의 수 S, 스세권 조건 Y
@@ -65,73 +64,68 @@ public class Main {
             sbList.add(Integer.parseInt(st.nextToken()));
         }
         // 스타벅스 정점에 대한 다른 노드의 거리 배열 초기화
-        int[][] sbDist = new int[S][V+1];
-        for (int i = 0; i < S; i++) {
-            for (int j = 0; j <= V; j++) {
-                sbDist[i][j] = Integer.MAX_VALUE;
-            }
+        int[] sbDist = new int[V+1];
+        for (int i = 0; i <= V; i++) {
+            sbDist[i] = Integer.MAX_VALUE;
         }
         // -------------------------------------입력 끝---------------------------------------------
         // 다익스트라 용 우선순위 큐
         PriorityQueue<node> pq = new PriorityQueue<>((n1, n2) -> n1.dist - n2.dist);
         // 맥세권 다익스트라
-        for (int i = 0; i < mcList.size(); i++) {
+        for (Integer value : mcList) {
             // 맥도날드 정점 입력
-            pq.offer(new node(mcList.get(i), 0));
-            mcDist[i][mcList.get(i)] = 0;
-            // 우선순위 큐 순회
-            while (!pq.isEmpty()) {
-                int nodeNum = pq.peek().num;
-                int nodeDist = pq.peek().dist;
-                pq.poll();
+            pq.offer(new node(value, 0));
+            mcDist[value] = 0;
+        }
+        // 우선순위 큐 순회
+        while (!pq.isEmpty()) {
+            int nodeNum = pq.peek().num;
+            int nodeDist = pq.peek().dist;
+            pq.poll();
 
-                if (mcDist[i][nodeNum] != nodeDist) continue;
+            if (mcDist[nodeNum] != nodeDist) continue;
 
-                for (int j = 0; j < graph[nodeNum].size(); j++) {
-                    node nextNode = graph[nodeNum].get(j);
-                    int nextDist = nextNode.dist + nodeDist;
-                    if (mcDist[i][nextNode.num] > nextDist) {
-                        mcDist[i][nextNode.num] = nextDist;
-                        pq.offer(new node(nextNode.num, nextDist));
-                    }
+            for (int j = 0; j < graph[nodeNum].size(); j++) {
+                node nextNode = graph[nodeNum].get(j);
+                int nextDist = nextNode.dist + nodeDist;
+                if (mcDist[nextNode.num] > nextDist) {
+                    mcDist[nextNode.num] = nextDist;
+                    pq.offer(new node(nextNode.num, nextDist));
                 }
             }
         }
 
         // 스타벅스 다익스트라
-        for (int i = 0; i < sbList.size(); i++) {
+        for (Integer integer : sbList) {
             // 스타벅스 정점 입력
-            pq.offer(new node(sbList.get(i), 0));
-            sbDist[i][sbList.get(i)] = 0;
-            // 우선순위 큐 순회
-            while (!pq.isEmpty()) {
-                int nodeNum = pq.peek().num;
-                int nodeDist = pq.peek().dist;
-                pq.poll();
+            pq.offer(new node(integer, 0));
+            sbDist[integer] = 0;
+        }
+        // 우선순위 큐 순회
+        while (!pq.isEmpty()) {
+            int nodeNum = pq.peek().num;
+            int nodeDist = pq.peek().dist;
+            pq.poll();
 
-                if (sbDist[i][nodeNum] != nodeDist) continue;
+            if (sbDist[nodeNum] != nodeDist) continue;
 
-                for (int j = 0; j < graph[nodeNum].size(); j++) {
-                    node nextNode = graph[nodeNum].get(j);
-                    int nextDist = nextNode.dist + nodeDist;
-                    if (sbDist[i][nextNode.num] > nextDist) {
-                        sbDist[i][nextNode.num] = nextDist;
-                        pq.offer(new node(nextNode.num, nextDist));
-                    }
+            for (int j = 0; j < graph[nodeNum].size(); j++) {
+                node nextNode = graph[nodeNum].get(j);
+                int nextDist = nextNode.dist + nodeDist;
+                if (sbDist[nextNode.num] > nextDist) {
+                    sbDist[nextNode.num] = nextDist;
+                    pq.offer(new node(nextNode.num, nextDist));
                 }
             }
         }
 
         int homeDist = Integer.MAX_VALUE;
-        for (int i = 0; i < mcDist.length; i++) {
-            for (int x = 0; x < sbDist.length; x++) {
-                for (int j = 1; j < mcDist[i].length; j++) {
-                    if (mcList.contains(j) || sbList.contains(j)) continue;
-                    if (mcDist[i][j] == 0 || sbDist[x][j] == 0) continue;
-                    if (mcDist[i][j] <= X && sbDist[x][j] <= Y) {
-                        homeDist = Math.min(homeDist, mcDist[i][j] + sbDist[x][j]);
-                    }
-                }
+        for (int i = 0; i < sbDist.length; i++) {
+            // 둘 중의 하나가 맥도날드나 스타벅스면 스킵
+            if (mcDist[i] == 0 || sbDist[i] == 0) continue;
+            // 둘의 값이 기준치 이하면 더하고 기존값과 비교
+            if (mcDist[i] <= X && sbDist[i] <= Y) {
+                homeDist = Math.min(homeDist, mcDist[i] + sbDist[i]);
             }
         }
 
