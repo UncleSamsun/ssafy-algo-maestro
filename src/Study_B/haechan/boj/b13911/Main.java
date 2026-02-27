@@ -104,12 +104,16 @@ public class Main {
 	
 	private static int getAnswer(List<Node> macSpots, List<Node> sbugSpots) {
 		int answer = Integer.MAX_VALUE;
-		
+
+		Map<Integer, Integer> macMap = new HashMap<>();
 		for(Node macPlace : macSpots) {
-			for(Node sbugPlace : sbugSpots) {
-				if(macPlace.v == sbugPlace.v) {
-					answer = Math.min(answer, macPlace.cost + sbugPlace.cost);
-				}
+			macMap.put(macPlace.v, macPlace.cost);
+		}
+		
+		for(Node sbugPlace : sbugSpots) {
+			if(macMap.containsKey(sbugPlace.v)) {
+				int totalCost = macMap.get(sbugPlace.v) + sbugPlace.cost;
+				answer = Math.min(answer, totalCost);
 			}
 		}
 		return answer!=Integer.MAX_VALUE ? answer : -1;
