@@ -1,24 +1,22 @@
-package asdfasdf;
-
 import java.util.*;
 
 class UserSolution {
 
 	static int N, mWidth, mHeight;
 	
-	// mIDs[] - ¾îÇ×ÀÇ ¾ÆÀÌµð¿Í, ÃÊ±â ÀÔ·ÂµÈ ÀÎµ¦½ºµéÀ» ¾ÐÃàÀ» ÅëÇØ ÀúÀå.
+	// mIDs[] - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½, ï¿½Ê±ï¿½ ï¿½Ô·Âµï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	static int[] mIDs;
 	static int[] rankOfId;
 	
-	// patterns[°ÝÀÚµéÀÌ °¡Áú ¼ö ÀÖ´Â ÆÐÅÏÀÇ °æ¿ì][°ÝÀÚÀÇ À§Ä¡]
-	// 64 - °ÝÀÚ°¡ °¡Áú ¼ö ÀÖ´Â (0 ~ 3)¼öµé·Î ¸¸µé ¼ö ÀÖ´Â ÆÐÅÏÀÇ °¡Áþ¼ö.
-	// 10000 - ¾îÇ×ÀÇ ÃÖ´ë °³¼ö (20) * ¾îÇ× ÃÖ´ë ³Êºñ (500)
+	// patterns[ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½][ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡]
+	// 64 - ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ (0 ~ 3)ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// 10000 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ (20) * ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Êºï¿½ (500)
 	static int[][] patterns;
 	
-	// patternCnt[°ÝÀÚµéÀÌ °¡Áú ¼ö ÀÖ´Â ÆÐÅÏÀÇ °æ¿ì] - ÇØ´ç ÆÐÅÏÀÌ ³ªÅ¸³ª´Â È½¼ö
+	// patternCnt[ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½] - ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½
 	static int[] patternCnt = new int[64];
 	
-	// tanks[¾îÇ×ÀÇ ÃÊ±â ÀÎµ¦½º][¾îÇ× ³Êºñ] - ÇØ´ç ¾îÇ× ¿­ÀÇ ³ôÀÌ + °ÝÀÚ µ¥ÀÌÅÍ ÀúÀå.
+	// tanks[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½Îµï¿½ï¿½ï¿½][ï¿½ï¿½ï¿½ï¿½ ï¿½Êºï¿½] - ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	static int[][] tanks;
 
 	private int getPattern(int i, int j) {
@@ -47,13 +45,13 @@ class UserSolution {
 		patterns = new int[64][N * 500];
 		
 		for (int i = 0; i < N; i++) {
-			mIDs[i] = mIDs[i] * 100 + i;
+			this.mIDs[i] = mIDs[i] * 100 + i;
 		}
 		
 		Arrays.sort(this.mIDs);
 		
 		for (int i = 0; i < N; i++) {
-			rankOfId[mIDs[i] % 100] = i;
+			rankOfId[this.mIDs[i] % 100] = i;
 		}
 		
 		for (int i = 0; i < N; i++) {
@@ -76,13 +74,20 @@ class UserSolution {
 			int idx = position >> 12;
 			int row = position & 0xFFF;
 			boolean flag = true;
-			
+			int prevHeight = 0;
+
 			for (int k = 0; k < 3; k++) {
 				int height = tanks[idx][row + k] >> 2;
-				if (height + mLengths[k] > mHeight) {
+
+				if (
+					(k > 0 && !isConnected(height, mLengths[k], prevHeight, mLengths[k-1])) ||
+					height + mLengths[k] > mHeight
+				) {
 					flag = false;
 					break;
 				}
+
+				prevHeight = height;
 			}
 			
 			if (flag) answer++;
@@ -91,24 +96,42 @@ class UserSolution {
 		return answer;
 	}
 
+	boolean isConnected(int height, int curDiff, int prevHeight, int prevDiff) {
+
+		int prevBottom = prevHeight + 1;
+		int prevTop = prevHeight + prevDiff;
+		int bottom = height + 1;
+		int top = height + curDiff;
+
+		if (prevTop < bottom || prevBottom > top) return false;
+		return true;
+	}
+
 	public int addStructures(int mLengths[], int mUpShapes[], int mDownShapes[]) {
 
 		int pattern = mDownShapes[0] << 4 | mDownShapes[1] << 2 | mDownShapes[2];
-		int nextPattern = mUpShapes[0] << 4 | mUpShapes[1] << 2 | mUpShapes[2];
-		int rank = N;
+		int rank = N + 1;
 		int idx = 0, target = 0;
 		
 		for (int i = 0; i < patternCnt[pattern]; i++) {
 			int position = patterns[pattern][i];
 			int nidx = position >> 12;
-			int row = position & 0xFFF;
+			int row = position & 0x7FF;
 			boolean flag = true;
+			int prevHeight = 0;
 			
 			for (int k = 0; k < 3; k++) {
-				if((tanks[nidx][row + k] >> 2) + mLengths[k] > mHeight) {
+
+				int height = tanks[nidx][row + k] >> 2;
+
+				if((k > 0 && !isConnected(height, mLengths[k], prevHeight, mLengths[k - 1])) ||
+					height + mLengths[k] > mHeight
+				) {
 					flag = false;
 					break;
 				}
+
+				prevHeight = height;
 			}
 			
 			if (!flag) continue;
@@ -119,29 +142,129 @@ class UserSolution {
 			idx = nidx;
 		}
 
-		if (rank == N) return 0;
+		if (rank == N + 1) return 0;
+
+		int id = mIDs[rank] / 100;
+		int row = patterns[pattern][target] & 0x7FF;
+		int cidx = mIDs[rank] % 100;
 		
-		int id = mIDs[rank];
-		int row = patterns[pattern][target] & 0xFFF;
-		
-		patternCnt[pattern]--;
-		patterns[nextPattern][patternCnt[nextPattern]] = patterns[pattern][target];
-		patterns[pattern][target] = patterns[pattern][patternCnt[pattern]];
-		patternCnt[nextPattern]++;
-		
-		
+		resetPattern(cidx, row, mDownShapes, mUpShapes);
+
 		for (int k = 0; k<3; k++) {
 			int height = (tanks[idx][row + k] >> 2) + mLengths[k];
 			tanks[idx][row + k] = height << 2 | mUpShapes[k];
 		}
 		
-		return id * 1000 + row;
+		return id * 1000 + row + 1;
+	}
+
+	void resetPattern(int idx, int row, int[] mDownShapes, int[] mUpShapes) {
+
+		for (int i = -2; i <= 2; i++) {
+	
+			int start = row + i;
+			if (start < 0 || start > mWidth - 3) continue;
+	
+			// ê¸°ì¡´ íŒ¨í„´ ê³„ì‚°
+			int old1 = tanks[idx][start] & 3;
+			int old2 = tanks[idx][start + 1] & 3;
+			int old3 = tanks[idx][start + 2] & 3;
+	
+			int oldPattern = (old1 << 4) | (old2 << 2) | old3;
+	
+			// ë³€ê²½ í›„ íŒ¨í„´ ê³„ì‚°
+			int new1 = (start >= row && start < row + 3)
+					? mUpShapes[start - row]
+					: old1;
+	
+			int new2 = (start + 1 >= row && start + 1 < row + 3)
+					? mUpShapes[start + 1 - row]
+					: old2;
+	
+			int new3 = (start + 2 >= row && start + 2 < row + 3)
+					? mUpShapes[start + 2 - row]
+					: old3;
+	
+			int newPattern = (new1 << 4) | (new2 << 2) | new3;
+	
+			int position = (idx << 12) | start;
+	
+			// ê¸°ì¡´ íŒ¨í„´ì—ì„œ ì œê±°
+			int removeIdx = -1;
+			for (int j = 0; j < patternCnt[oldPattern]; j++) {
+				if (patterns[oldPattern][j] == position) {
+					removeIdx = j;
+					break;
+				}
+			}
+	
+			if (removeIdx == -1) continue; // ëª» ì°¾ìœ¼ë©´ ìŠ¤í‚µ (ì•ˆì „ìž¥ì¹˜)
+	
+			int lastIdx = patternCnt[oldPattern] - 1;
+			int moved = patterns[oldPattern][lastIdx];
+	
+			patterns[oldPattern][removeIdx] = moved;
+			patternCnt[oldPattern]--;
+	
+			// ìƒˆ íŒ¨í„´ìœ¼ë¡œ ì¶”ê°€
+			patterns[newPattern][patternCnt[newPattern]] = position;
+			patternCnt[newPattern]++;
+		}
 	}
 
 	public Solution.Result pourIn(int mWater) {
 		Solution.Result ret = new Solution.Result();
-
+		ret.ID = ret.height = ret.used = 0;
 		
+		int[][] cpySortDepth = new int[N][mWidth];
+
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j<mWidth; j++) {
+				cpySortDepth[i][j] = tanks[mIDs[i] % 100][j] >> 2;
+			}
+			Arrays.sort(cpySortDepth[i]);
+		}
+		
+		int used = 0;
+		
+		for (int i = 0; i<N; i++) {
+			int[] sortArr = cpySortDepth[i];
+			int waterCnt = 0;
+			int height = sortArr[0];
+			// System.out.println("id : " + (mIDs[i] / 100));
+			// System.out.println(" - " + Arrays.toString(sortArr));
+			
+			while (waterCnt <= mWater && height <= mHeight) {
+				used = waterCnt;
+				for (int j = 0; j < mWidth; j++) {
+					if (sortArr[j] == height) {
+						sortArr[j]++;
+						waterCnt++;
+					}
+				}
+
+				height++;
+			}
+
+			height -= 1;
+			if (used == 0) continue;
+
+			if (ret.height < height) {
+				ret.height = height;
+				ret.used = used;
+				ret.ID = mIDs[i] / 100;
+			} else if (ret.height == height) {
+				if (ret.used < used) {
+					ret.used = used;
+					ret.ID = mIDs[i] / 100;
+				}
+			}
+
+			// System.out.println(" - " + Arrays.toString(sortArr));
+			// System.out.println(used + " " + (mIDs[i] / 100) + " " + height);
+			// System.out.println(ret.used + " " + ret.ID + " " + ret.height);
+			// System.out.println();
+		}
 
 		return ret;
 	}
