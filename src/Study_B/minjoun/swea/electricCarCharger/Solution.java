@@ -1,5 +1,7 @@
 package Study_B.minjoun.swea.electricCarCharger;
 
+import Study_B.minjoun.swea.fishTank.UserSolution;
+
 import java.util.Scanner;
 
 class Solution {

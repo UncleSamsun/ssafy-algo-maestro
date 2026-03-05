@@ -25,7 +25,7 @@ class FishTank {
         this.upShapes = upShapes;
     }
 }
-class UserSolution {
+public class UserSolution {
     // 어항의 수
     int tankNum;
     // 어항의 가로길이
