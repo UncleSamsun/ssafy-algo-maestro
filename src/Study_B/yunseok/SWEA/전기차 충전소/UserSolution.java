@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-// 9�� 25�� ~ 
+// 9시 25분 ~ 1시 32분
 
 class UserSolution {
 	
@@ -20,13 +20,11 @@ class UserSolution {
 		int cur;
 		int cost;
 		int total;
-		long[] visited;
 		
-		Node(int cur, int cost, int total, long[] visited) {
+		Node(int cur, int cost, int total) {
 			this.cur = cur;
 			this.cost = cost;
 			this.total = total;
-			this.visited = visited;
 		}
 		
 		@Override
@@ -52,26 +50,19 @@ class UserSolution {
 			edges.put(mId[i], (start << 16 | end));
 		}
 		
-		for (int[] x : edgeMap) {
-		System.out.println("  --  " + Arrays.toString(x));
-	}
-		
 		return;
 	}
 
-	// 1400 ȸ ȣ��
+	// 1400 회 호출
 	public void add(int mId, int sCity, int eCity, int mDistance) {
 		
 		edgeMap[sCity][eCity] = mDistance;
 		edges.put(mId, sCity << 16 | eCity);
 		
-//		for (int[] x : edgeMap) {
-//			System.out.println("  --  " + Arrays.toString(x));
-//		}
 		return;
 	}
 
-	// 500 ȸ ȣ��
+	// 500 회 호출
 	public void remove(int mId) {
 		int startAndEnd = edges.get(mId);
 		int start = startAndEnd >> 16;
@@ -83,14 +74,13 @@ class UserSolution {
 		return;
 	}
 
-	// 100 ȸ ȣ��
+	// 100 회 호출
 	public int cost(int sCity, int eCity) {
 		
-//		System.out.println(" sCity, eCity : " + sCity + " " + eCity);
 		PriorityQueue<Node> pq = new PriorityQueue<>();
-		long[] visited = new long[N / 60 + 1];
-		visited[sCity / 60] |= 1 << sCity % 60;
-		pq.add(new Node(sCity, mCost[sCity], 0, visited));
+		pq.add(new Node(sCity, mCost[sCity], 0));
+		// dist[i][0] - i번째 도시까지 도달한 total 비용
+		// dist[i][1] - i번째 도시까지 도달했을 때 최소 Cost
 		int[][] dist = new int[N][2];
 		
 		for (int[] x : dist) {
@@ -98,39 +88,28 @@ class UserSolution {
 			x[1] = INF;
 		}
 		
-		dist[sCity][0] = 0;
-		dist[sCity][1] = mCost[sCity];
-		
-		
 		int result = 0;
 		
 		while(!pq.isEmpty()) {
 			Node n = pq.poll();
 			int cur = n.cur;
 
+			dist[cur][0] = n.total;
+			dist[cur][1] = n.cost;
+
 			if (cur == eCity) {
 				result = n.total;
 				break;
 			}
 			
-			long[] curVisited = n.visited;
-			long[] v = new long[curVisited.length];
-			
-			for (int i = 0; i < curVisited.length; i++) {
-				v[i] = curVisited[i];
-			}
-			
-			v[n.cur / 60] |= 1 << n.cur % 60;
-			
 			for (int i = 0 ; i < N; i++) {
-				
-				if ((v[i/60] & 1 << (i % 60)) > 0) continue;
 				
 				if (edgeMap[cur][i] != 0) {
 					int total = edgeMap[cur][i] * n.cost;
 					
+					// total 비용 & Cost 모두 범위 해당 안될때만 pq에 넣어서 진행.
 					if (dist[i][0] <= n.total + total && dist[i][1] <= n.cost) continue;
-					pq.add(new Node(i, Math.min(mCost[i], n.cost), n.total + total, v));
+					pq.add(new Node(i, Math.min(mCost[i], n.cost), n.total + total));
 
 				}
 			}
