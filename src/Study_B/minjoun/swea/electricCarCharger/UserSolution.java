@@ -1,3 +1,5 @@
+package Study_B.minjoun.swea.electricCarCharger;
+
 import java.util.*;
 
 class UserSolution {
