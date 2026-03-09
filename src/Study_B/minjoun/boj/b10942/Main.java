@@ -8,7 +8,6 @@ public class Main {
     static StringTokenizer st;
 
     public static void main(String[] args) throws Exception{
-        // 도시와 도로의 개수 입력
         int N = Integer.parseInt(br.readLine().trim());
         int[] arr = new int[N+1];
         int[][] dp = new int[N+1][N+1];
