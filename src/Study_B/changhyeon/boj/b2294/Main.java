@@ -18,6 +18,7 @@ public class Main {
             coins[i] = Integer.parseInt(br.readLine());
         }
         dp[0] = 0;
+
         for (int c : coins) {
 
             for (int i = c; i <= k; i++) {

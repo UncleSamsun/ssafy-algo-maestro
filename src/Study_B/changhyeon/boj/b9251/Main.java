@@ -24,6 +24,8 @@ class Main{
             }
         }
         System.out.println(max);
-
     }
 }
+
+// dp[i] << 정의
+// dp[i][j] s1 = i번째 ~ s2 = j번째 까지의 최장 공통 수열
