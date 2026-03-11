@@ -43,11 +43,6 @@ public class Main {
         int n = s.length();
         double cnt = 1;
 
-        // 사이즈가 1이면 cnt X
-        // 사이즈가 1이상이면 cnt++
-        // 첫 입력은 무조건 cnt++
-
-
         for (int i = 1; i < n; i++) {
             if (cur.size > 1 || cur.end) cnt++;
             int idx = s.charAt(i) - 'a';
